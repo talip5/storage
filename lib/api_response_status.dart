@@ -1,0 +1,4 @@
+enum ApiResponseStatus{
+  successful,
+  notFound
+}
