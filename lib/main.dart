@@ -5,10 +5,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
@@ -70,11 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
 
                 FirebaseStorage storage=FirebaseStorage.instance;
-                Reference ref=storage.ref().child('user').child('ali').child('profil.png');
+                Reference ref=storage.ref().child('user').child('Galeri').child('profil.png');
                 UploadTask uploadTask=ref.putFile(_image);
-                var uri=await(await uploadTask.whenComplete(() => ref.getDownloadURL()));
+                print('xxx'+ uploadTask.snapshot.state.toString());
+                uploadTask.whenComplete(() => print('yuklendi'));
+                var uri=(await uploadTask.whenComplete(() => ref.getDownloadURL()));
                 print(uri);
+                //print(image!.path);
                 print('Galeri');
+               // print(_image);
               },
               child: Text('Galeriden resim yukleme'),
             ),
@@ -88,9 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   _image = File(image!.path);
                 });
                 FirebaseStorage storage=FirebaseStorage.instance;
-                Reference ref=storage.ref().child('user').child('veli').child('profil.png');
+                Reference ref=storage.ref().child('user').child('Kamera').child('profil.png');
                 UploadTask uploadTask=ref.putFile(_image);
-                var uri=await(await uploadTask.whenComplete(() => ref.getDownloadURL()));
+                var uri=(await uploadTask.whenComplete(() => ref.getDownloadURL()));
                 print(uri);
                 print('Kamera');
               },
@@ -117,6 +123,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.grey[800],
                       ),
                     ),
+            ),
+            ElevatedButton(
+                onPressed: (){
+                  print('Cameras');
+                },
+                child: Text('Cameras'),
             ),
           ],
         ),
