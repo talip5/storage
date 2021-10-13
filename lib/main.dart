@@ -5,11 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-   runApp(const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +27,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
@@ -74,13 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 FirebaseStorage storage=FirebaseStorage.instance;
                 Reference ref=storage.ref().child('user').child('Galeri').child('profil.png');
                 UploadTask uploadTask=ref.putFile(_image);
-                print('xxx'+ uploadTask.snapshot.state.toString());
-                uploadTask.whenComplete(() => print('yuklendi'));
-                var uri=(await uploadTask.whenComplete(() => ref.getDownloadURL()));
+                var uri=await(await uploadTask.whenComplete(() => ref.getDownloadURL()));
                 print(uri);
                 //print(image!.path);
                 print('Galeri');
-               // print(_image);
+                print(_image);
               },
               child: Text('Galeriden resim yukleme'),
             ),
@@ -96,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 FirebaseStorage storage=FirebaseStorage.instance;
                 Reference ref=storage.ref().child('user').child('Kamera').child('profil.png');
                 UploadTask uploadTask=ref.putFile(_image);
-                var uri=(await uploadTask.whenComplete(() => ref.getDownloadURL()));
+                var uri=await(await uploadTask.whenComplete(() => ref.getDownloadURL()));
                 print(uri);
                 print('Kamera');
               },
@@ -109,26 +105,20 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(color: Colors.red[200]),
               child: _image != null
                   ? Image.file(
-                      _image,
-                      width: 200.0,
-                      height: 200.0,
-                      fit: BoxFit.cover,
-                    )
+                _image,
+                width: 200.0,
+                height: 200.0,
+                fit: BoxFit.cover,
+              )
                   : Container(
-                      decoration: BoxDecoration(color: Colors.red[200]),
-                      width: 200,
-                      height: 200,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-            ),
-            ElevatedButton(
-                onPressed: (){
-                  print('Cameras');
-                },
-                child: Text('Cameras'),
+                decoration: BoxDecoration(color: Colors.red[200]),
+                width: 200,
+                height: 200,
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.grey[800],
+                ),
+              ),
             ),
           ],
         ),
