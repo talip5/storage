@@ -31,12 +31,13 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  String title1='deneme';
   final ImagePicker imagePicker = ImagePicker();
   var _image;
 
@@ -44,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title1),
       ),
       body: Center(
         child: Column(
@@ -67,10 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     source: ImageSource.gallery);
                 setState(() {
                   _image = File(image!.path);
+                  title1=_image.toString();
                 });
 
                 FirebaseStorage storage=FirebaseStorage.instance;
-                Reference ref=storage.ref().child('user').child('Galeri').child('profil.png');
+                Reference ref=storage.ref().child('user').child('Galeri35').child('profil35.png');
                 UploadTask uploadTask=ref.putFile(_image);
                 var uri=await(await uploadTask.whenComplete(() => ref.getDownloadURL()));
                 print(uri);
@@ -88,9 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     preferredCameraDevice: CameraDevice.front);
                 setState(() {
                   _image = File(image!.path);
+                  title1=_image.toString();
+                  print(_image);
                 });
                 FirebaseStorage storage=FirebaseStorage.instance;
-                Reference ref=storage.ref().child('user').child('Kamera').child('profil.png');
+                Reference ref=storage.ref().child('user').child('Kamera35').child('profil35.png');
                 UploadTask uploadTask=ref.putFile(_image);
                 var uri=await(await uploadTask.whenComplete(() => ref.getDownloadURL()));
                 print(uri);
@@ -120,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            Text(title1),
           ],
         ),
       ),
